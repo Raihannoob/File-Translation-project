@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><h2>File Translation App</h2></title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        .translated-file {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-5 mb-4">File Translation App</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="target_language">Select the language you want to translate to:</label>
+                <select class="form-control" id="target_language" name="target_language">
+                    <!-- Add language options as needed -->
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="file">Choose a file to upload:</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="file" name="file" accept=".xls, .xlsx, .pptx" required>
+                    <label class="custom-file-label" for="file">Choose file</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Upload and Translate</button>
+        </form>
+
+        <div class="translated-file mt-3">
+            {% if translated_file %}
+                Translated File: <a href="{{ url_for('static', filename=translated_file) }}" target="_blank">{{ translated_file }}</a>
+            {% endif %}
+        </div>
+
+        <div class="error-message mt-3">
+            {% if error %}
+                {{ error }}
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js (required for Bootstrap) -->
+    <script>
+        document.getElementById("file").addEventListener("change", function() {
+            var fileName = this.files[0].name;
+            var label = document.querySelector('.custom-file-label');
+            label.innerHTML = fileName;
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
